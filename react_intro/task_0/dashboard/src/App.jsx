@@ -5,9 +5,8 @@ import './App.css';
 const App = () => {
   const date = new Date()
 
-  return (
-    
-    <>
+  return ( 
+  <>
     <div className="App-header">
         <img src={logo} alt="Holberton Logo" />
         <h1 style={{ color: '#E1003C' }}>School dashboard</h1>
