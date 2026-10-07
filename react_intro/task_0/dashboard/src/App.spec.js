@@ -1,14 +1,33 @@
-import { render, screen } from 'testing-library/react';
-import App from './App.jsx';
+import { render, screen } from '@testing-library/react';
+import App from './App';
 
-test('load App component', () => {
-  render(<App-header />)
-});
+describe('App component', () => {
+  test('renders the h1 element with the text "School Dashboard"', () => {
+    render(<App />);
 
-test('render 2p tags', () => {
-    render(<App-body />, <App-footer />)
-});
+    const heading = screen.getByRole('heading', {
+      level: 1,
+      name: /school dashboard/i,
+    });
 
-test('render img', () => {
-  render(<App-logo />)
+    expect(heading).toBeInTheDocument();
+  });
+
+  test('renders the text content of the paragraphs in app-body and app-footer', () => {
+    render(<App />);
+
+    const bodyText = screen.getByText(/login to access the full dashboard/i);
+    const footerText = screen.getByText(/copyright \d{4} - holberton school/i);
+
+    expect(bodyText).toBeInTheDocument();
+    expect(footerText).toBeInTheDocument();
+  });
+
+  test('renders an img element', () => {
+    render(<App />);
+
+    const image = screen.getByAltText(/holberton logo/i);
+
+    expect(image).toBeInTheDocument();
+  });
 });
