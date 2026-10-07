@@ -1,17 +1,8 @@
-import react, { reactCompilerPreset } from "@vitejs/plugin-react";
-import babel from "@rolldown/plugin-babel";
-import { defineConfig } from "vite";
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
+// https://vite.dev/config/
 export default defineConfig({
-    base: "/holbertonschool-web_react/",
-  plugins: [
-    react(),
-    babel({
-      presets: [
-        reactCompilerPreset({
-          target: "18",
-        }),
-      ],
-    }),
-  ],
-});
+  base: "/holbertonschool-web_react/",
+  plugins: [react()],
+})
