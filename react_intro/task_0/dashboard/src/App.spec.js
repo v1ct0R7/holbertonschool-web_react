@@ -17,8 +17,7 @@ describe('App component', () => {
     render(<App />);
 
     const bodyText = screen.getByText(/login to access the full dashboard/i);
-    const footerText = screen.getByText(/copyright \d{4} - holberton school/i);
-
+    const footerText = screen.getByText(/copyright \d{4} holberton school main dashboard/i);
     expect(bodyText).toBeInTheDocument();
     expect(footerText).toBeInTheDocument();
   });
