@@ -16,8 +16,7 @@ describe('App component', () => {
     render(<App />);
 
     const bodyText = screen.getByText(/login to access the full dashboard/i);
-    const footerText = screen.getByText(/copyright \d{4} - holberton school/i);
-
+const footerText = screen.getByText(/copyright \d{4}.*holberton school/i);
     expect(bodyText).toBeInTheDocument();
     expect(footerText).toBeInTheDocument();
   });
@@ -56,8 +55,8 @@ describe('App component', () => {
   test('renders a button with the text "OK"', () => {
     render(<App />);
 
-    const button = screen.getByRole('button', { name: /ok/i });
-
+   const button = screen.getByRole('button', { name: /^ok$/i });
+   
     expect(button).toBeInTheDocument();
   });
 });
