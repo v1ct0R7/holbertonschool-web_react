@@ -16,11 +16,17 @@ function App() {
         </div>
         <div className="App-body">
           <p>Login to access the full dashboard</p>
-          <label htmlFor="email">Email: </label>
-          <input type="email" autoFocus/>
-          <label htmlFor="pass">Password: </label>
-          <input type="password" autoFocus/>
-          <button>OK</button>
+          <div className="App-login">
+            <div className="App-field">
+              <label htmlFor="email">Email:</label>
+              <input type="email" id="email" name="email" autoFocus />
+            </div>
+            <div className="App-field">
+              <label htmlFor="pass">Password:</label>
+              <input type="password" id="pass" name="password" />
+            </div>
+            <button type="button">OK</button>
+          </div>
         </div>
         <div className="App-footer">
           <p>Copyright {getCurrentYear()} - {getFooterCopy(true)}</p>
