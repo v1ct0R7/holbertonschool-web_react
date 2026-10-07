@@ -1,9 +1,3 @@
-# holbertonschool-web_react
+# Task 0: Basic application
 
-# holbertonschool-web_react
-
-# holbertonschool-web_react
-
-# holbertonschool-web_react
-
-# holbertonschool-web_react
+This folder contains the dashboard React application built with Vite for Task 0.
