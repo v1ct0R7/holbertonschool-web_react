@@ -1,19 +1,5 @@
-body {
-  margin: 0;
-  background-color: #f2f2f2;
-}
-
-#root {
-  max-width: 1000px;
-  min-height: 100vh;
-  margin: 0 auto;
-  padding: 0 25px;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
-}
-
 .App {
+  font-family: Arial, sans-serif;
   color: #1d1d1d;
 }
 
@@ -25,7 +11,7 @@ body {
 }
 
 .App-logo {
-  width: 125px;
+  width: 220px;
   height: auto;
   margin-right: 20px;
 }
@@ -33,30 +19,28 @@ body {
 .App-header h1 {
   margin: 0;
   color: #e1003c;
-  font-family: Arial, sans-serif;
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 2rem;
+  font-weight: 600;
 }
 
 .App-body {
-  min-height: 270px;
+  min-height: 420px;
   display: flex;
   align-items: flex-start;
-  padding-top: 20px;
-  padding-left: 15px;
+  padding-top: 42px;
+  padding-left: 24px;
 }
 
 .App-body p {
   margin: 0;
-  font-size: 0.8rem;
+  font-size: 1.2rem;
 }
 
 .App-footer {
   border-top: 1px solid #e1003c;
   text-align: center;
-  padding: 10px 0;
-  font-size: 0.8rem;
-  font-style: italic;
+  padding: 14px 0;
+  font-size: 1rem;
 }
 
 .App-footer p {

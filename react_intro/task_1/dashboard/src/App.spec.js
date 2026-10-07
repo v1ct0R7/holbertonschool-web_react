@@ -9,7 +9,6 @@ describe('App component', () => {
       level: 1,
       name: /school dashboard/i,
     });
-
     expect(heading).toBeInTheDocument();
   });
 
@@ -26,8 +25,7 @@ describe('App component', () => {
   test('renders an img element', () => {
     render(<App />);
 
-    const image = screen.getByAltText(/holberton logo/i);
-
-    expect(image).toBeInTheDocument();
+    const logo = screen.getByAltText(/holberton logo/i);
+    expect(logo).toBeInTheDocument();
   });
 });
