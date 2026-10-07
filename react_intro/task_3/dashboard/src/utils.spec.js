@@ -20,3 +20,8 @@ describe('getFooterCopy', () => {
 
 describe('getLatestNotification', () => {
   test('returns the expected notification string', () => {
+    expect(getLatestNotification()).toBe(
+      '<strong>Urgent requirement</strong> - complete by EOD'
+    );
+  });
+});
