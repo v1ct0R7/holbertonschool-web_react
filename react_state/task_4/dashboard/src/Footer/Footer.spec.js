@@ -1,21 +1,30 @@
-import { render, screen } from '@testing-library/react';
-import Footer from './Footer';
-import { newContext } from '../Context/context';
+// Footer/Footer.spec.js
+import { render, screen } from "@testing-library/react";
+import Footer from "./Footer";
+import newContext from "../Context/context";
 
-it('hides Contact us when logged out', () => {
-  render(
-    <newContext.Provider value={{ user: { email: '', password: '', isLoggedIn: false } }}>
-      <Footer />
-    </newContext.Provider>
-  );
-  expect(screen.queryByText('Contact us')).not.toBeInTheDocument();
+test("renders copyright text with current year and Holberton School", () => {
+  render(<Footer />);
+  const footerRegex = /copyright \d{4}.*holberton school/i;
+  expect(screen.getByText(footerRegex)).toBeInTheDocument();
 });
 
-it('shows Contact us when logged in', () => {
+test("does not display Contact us link when logged out", () => {
+  render(<Footer />);
+  expect(screen.queryByText(/contact us/i)).not.toBeInTheDocument();
+});
+
+test("displays Contact us link when logged in", () => {
+  const value = {
+    user: { email: "test@example.com", password: "password123", isLoggedIn: true },
+    logOut: () => {},
+  };
+
   render(
-    <newContext.Provider value={{ user: { email: 'a@b.com', password: '12345678', isLoggedIn: true } }}>
+    <newContext.Provider value={value}>
       <Footer />
     </newContext.Provider>
   );
-  expect(screen.getByText('Contact us')).toBeInTheDocument();
+
+  expect(screen.getByText(/contact us/i)).toBeInTheDocument();
 });
