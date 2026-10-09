@@ -1,94 +1,40 @@
-import { cleanup, render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import App from "./App";
+import { render, screen, fireEvent } from '@testing-library/react';
+import App from './App';
 
-jest.spyOn(window, "alert");
+describe('App keyboard shortcut', () => {
+  let alertSpy;
 
-describe("App Component", () => {
   beforeEach(() => {
-    // Render app component
-    render(<App />);
+    alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => {});
   });
 
-  // Test if app component renders Header component
-  it.skip("Renders Header component", () => {
-    const heading = screen.getByRole("heading", {
-      level: 1,
-      name: /school dashboard/i,
-    });
-    expect(heading).toBeInTheDocument();
+  afterEach(() => {
+    alertSpy.mockRestore();
   });
 
-  // Test if app component renders Login component
-  it.skip("Renders Login Component", () => {
-    const loginText = screen.getByText(/Login to access the full dashboard/i);
-    expect(loginText).toBeInTheDocument();
-  });
-
-  // Test if app component renders Footer component
-  it.skip("Renders Footer Component", () => {
-    expect(screen.getByText(/Copyright/i)).toBeInTheDocument();
-  });
-
-  // Test if login is rendered when isLoggedIn is false
-  it.skip("CourseList is rendered when isLoggedIn is false", () => {
-    cleanup();
-
-    const rendered = render(<App />);
-    const container = rendered.container;
-
-    // Get courseList
-    const loginComponent = container.querySelector(".App-body");
-
-    // Assert that CourseList exists
-    expect(loginComponent).toBeInTheDocument();
-  });
-
-  // Test if courseList is rendered when isLoggedIn is true
-  it.skip("CourseList is rendered when isLoggedIn is true", () => {
-    cleanup();
-
-    const rendered = render(<App isLoggedIn={true} />);
-    const container = rendered.container;
-
-    // Get courseList
-    const courseList = container.querySelector("#CourseList");
-
-    // Assert that CourseList exists
-    expect(courseList).toBeInTheDocument();
-  });
-
-  // Test if logOut function is called once when ctrl h combo is clicked
-  it("Logout function gets called once", async () => {
-    cleanup();
-
-    // Prop function
+  it('calls logOut once when ctrl + h are pressed', () => {
     const logOut = jest.fn();
-
     render(<App logOut={logOut} />);
 
-    // Simulate keyboard combo click
-    await userEvent.keyboard("{Control>}h{/Control}");
+    fireEvent.keyDown(document, { key: 'h', ctrlKey: true });
 
-    // Assert that logOut gets called once
-    expect(logOut).toBeCalledTimes(1);
+    expect(logOut).toHaveBeenCalledTimes(1);
   });
 
-  // Test if alert function is called and has correct string
-  it("Alert function is called", async () => {
-    cleanup();
-
-    // Spy on alert function
-    // const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => {});
-
+  it('calls alert with "Logging you out"', () => {
     render(<App />);
 
-    // Simulate keyboard combo click
-    await userEvent.keyboard("{Control>}h{/Control}");
+    fireEvent.keyDown(document, { key: 'h', ctrlKey: true });
 
-    // Assert that alert is called with 'Logging you out'
-    expect(global.alert).toHaveBeenCalledWith("Logging you out");
+    expect(alertSpy).toHaveBeenCalledWith('Logging you out');
+  });
 
-    // alertSpy.mockRestore();
+  it('does not call logOut for other keys', () => {
+    const logOut = jest.fn();
+    render(<App logOut={logOut} />);
+
+    fireEvent.keyDown(document, { key: 'h' });
+
+    expect(logOut).not.toHaveBeenCalled();
   });
 });
