@@ -1,67 +1,27 @@
-// Notifications/Notifications.jsx
-import React, { Fragment } from "react";
-import "./Notifications.css";
-import closeIcon from "../assets/close-button.png";
-import NotificationItem from "./NotificationItem.jsx";
+import { PureComponent } from 'react';
+import NotificationItem from './NotificationItem';
+import './Notifications.css';
 
-class Notifications extends React.PureComponent {
+class Notifications extends PureComponent {
   render() {
-    const {
-      notifications = [],
-      displayDrawer = false,
-      handleDisplayDrawer,
-      handleHideDrawer,
-      markNotificationAsRead,
-    } = this.props;
-
-    let content = null;
-
-    if (displayDrawer) {
-      if (notifications.length === 0) {
-        content = <p>No new notification for now</p>;
-      } else {
-        content = (
-          <Fragment>
-            <p>Here is the list of notifications</p>
-            <ul>
-              {notifications.map((notification) => (
-                <NotificationItem
-                  key={notification.id}
-                  id={notification.id}
-                  type={notification.type}
-                  html={notification.html}
-                  value={notification.value}
-                  markAsRead={markNotificationAsRead}
-                />
-              ))}
-            </ul>
-          </Fragment>
-        );
-      }
-    }
+    const { notifications = [], markNotificationAsRead = () => {} } = this.props;
 
     return (
-      <Fragment>
-        <div className="notification-title" onClick={handleDisplayDrawer}>
-          Your notifications
-        </div>
-        {displayDrawer && (
-          <div className="notification-items">
-            {content}
-            <button
-              style={{ position: "absolute", top: "15px", right: "20px" }}
-              aria-label="Close"
-              onClick={handleHideDrawer}
-            >
-              <img
-                style={{ width: "10px", height: "10px" }}
-                src={closeIcon}
-                alt="close icon"
-              />
-            </button>
-          </div>
-        )}
-      </Fragment>
+      <div className="notifications">
+        <p>Here is the list of notifications</p>
+        <ul>
+          {notifications.map((n) => (
+            <NotificationItem
+              key={n.id}
+              id={n.id}
+              type={n.type}
+              value={n.value}
+              html={n.html}
+              markAsRead={markNotificationAsRead}
+            />
+          ))}
+        </ul>
+      </div>
     );
   }
 }

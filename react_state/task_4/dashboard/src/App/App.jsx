@@ -1,130 +1,73 @@
-// App/App.jsx
-import { Component } from "react";
-import CourseList from "../CourseList/CourseList";
-import "../CourseList/CourseList.css";
-import Footer from "../Footer/Footer";
-import Header from "../Header/Header";
-import Login from "../Login/Login";
-import Notifications from "../Notifications/Notifications";
-import BodySection from "../BodySection/BodySection";
-import BodySectionWithMarginBottom from "../BodySection/BodySectionWithMarginBottom";
-import newContext from "../Context/context";
-import "./App.css";
+import { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
+import Notifications from '../Notifications/Notifications';
+import Header from '../Header/Header';
+import Login from '../Login/Login';
+import Footer from '../Footer/Footer';
+import CourseList from '../CourseList/CourseList';
+import { getLatestNotification } from '../utils/utils';
 
 const notificationsList = [
-  { id: 1, type: "default", value: "New course available" },
-  { id: 2, type: "urgent", value: "New resume available" },
-  {
-    id: 3,
-    type: "urgent",
-    html: { __html: "<strong>Urgent requirement</strong> - complete by EOD" },
-  },
+  { id: 1, type: 'default', value: 'New course available' },
+  { id: 2, type: 'urgent', value: 'New resume available' },
+  { id: 3, type: 'urgent', html: { __html: getLatestNotification() } },
 ];
 
 const coursesList = [
-  { id: 1, name: "ES6", credit: "60" },
-  { id: 2, name: "Webpack", credit: "20" },
-  { id: 3, name: "React", credit: "40" },
+  { id: 1, name: 'ES6', credit: 60 },
+  { id: 2, name: 'Webpack', credit: 20 },
+  { id: 3, name: 'React', credit: 40 },
 ];
 
 class App extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      displayDrawer: false,
-      user: {
-        email: "",
-        password: "",
-        isLoggedIn: false,
-      },
-      logOut: this.logOut,
       notifications: notificationsList,
       courses: coursesList,
     };
-
-    this.handleKeyDown = (e) => {
-      if (e.ctrlKey && e.key === "h") {
-        e.preventDefault();
-        alert("Logging you out");
-        this.logOut();
-      }
-    };
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
   }
 
   componentDidMount() {
-    window.addEventListener("keydown", this.handleKeyDown);
+    document.addEventListener('keydown', this.handleKeyDown);
   }
 
   componentWillUnmount() {
-    window.removeEventListener("keydown", this.handleKeyDown);
+    document.removeEventListener('keydown', this.handleKeyDown);
   }
 
-  handleDisplayDrawer = () => {
-    this.setState({ displayDrawer: true });
-  };
+  handleKeyDown(event) {
+    if (event.ctrlKey && event.key === 'h') {
+      alert('Logging you out');
+      this.props.logOut();
+    }
+  }
 
-  handleHideDrawer = () => {
-    this.setState({ displayDrawer: false });
-  };
-
-  logIn = (email, password) => {
-    this.setState({
-      user: { email, password, isLoggedIn: true },
-    });
-  };
-
-  logOut = () => {
-    this.setState({
-      user: { email: "", password: "", isLoggedIn: false },
-    });
-  };
-
-  markNotificationAsRead = (id) => {
+  markNotificationAsRead(id) {
     console.log(`Notification ${id} has been marked as read`);
     this.setState((prevState) => ({
-      notifications: prevState.notifications.filter(
-        (notification) => notification.id !== id
-      ),
+      notifications: prevState.notifications.filter((n) => n.id !== id),
     }));
-  };
+  }
 
   render() {
-    const { displayDrawer, user, notifications, courses } = this.state;
-
     return (
-      <newContext.Provider value={this.state}>
-        <div className="notifications-header">
-          <Header />
-          <div className="root-notifications">
-            <Notifications
-              notifications={notifications}
-              displayDrawer={displayDrawer}
-              handleDisplayDrawer={this.handleDisplayDrawer}
-              handleHideDrawer={this.handleHideDrawer}
-              markNotificationAsRead={this.markNotificationAsRead}
-            />
-          </div>
-        </div>
-
-        {user.isLoggedIn ? (
-          <BodySectionWithMarginBottom title="Course list">
-            <CourseList courses={courses} />
-          </BodySectionWithMarginBottom>
-        ) : (
-          <BodySectionWithMarginBottom title="Log in to continue">
-            <Login logIn={this.logIn} email={user.email} password={user.password} />
-          </BodySectionWithMarginBottom>
-        )}
-
-        <BodySection title="News from the School">
-          <p>Holberton School News goes here</p>
-        </BodySection>
-
+      <Fragment>
+        <Notifications
+          notifications={this.state.notifications}
+          markNotificationAsRead={this.markNotificationAsRead}
+        />
+        <Header />
+        {/* pjesa tjetër siç e ke (Login / CourseList me this.state.courses) */}
         <Footer />
-      </newContext.Provider>
+      </Fragment>
     );
   }
 }
+
+App.propTypes = { logOut: PropTypes.func };
+App.defaultProps = { logOut: () => {} };
 
 export default App;
