@@ -12,9 +12,13 @@ function Notifications({
 }) {
     return (
         <div className="notifications-container">
-            <div className="notification-title" onClick={handleDisplayDrawer}>
+            <button
+                type="button"
+                className="notification-title"
+                onClick={handleDisplayDrawer}
+            >
                 Your notifications
-            </div>
+            </button>
 
             {displayDrawer && (
                 <div className="notification-items">
