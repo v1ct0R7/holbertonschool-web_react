@@ -37,6 +37,12 @@ function normalizeCourses(data) {
       : [];
 }
 
+function logDevelopmentError(error) {
+  if (typeof window !== "undefined" && window.location.hostname === "localhost") {
+    console.error(error);
+  }
+}
+
 function App() {
   const [state, dispatch] = useReducer(appReducer, initialState);
   const removedNotificationIdsRef = useRef(new Set());
@@ -58,7 +64,7 @@ function App() {
           });
         }
       } catch (error) {
-        console.error(error);
+        logDevelopmentError(error);
       }
     };
 
@@ -84,7 +90,7 @@ function App() {
           });
         }
       } catch (error) {
-        console.error(error);
+        logDevelopmentError(error);
       }
     };
 

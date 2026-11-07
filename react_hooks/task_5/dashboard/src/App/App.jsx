@@ -43,7 +43,7 @@ function logDevelopmentError(error) {
   }
 }
 
-const App = () => {
+function App() {
   const { user: contextUser } = useContext(AppContext);
   const removedNotificationIdsRef = useRef(new Set());
   const [displayDrawer, setDisplayDrawer] = useState(true);
@@ -113,8 +113,12 @@ const App = () => {
   }, []);
 
   const logOut = useCallback(() => {
-    setUser(contextUser);
-  }, [contextUser]);
+    setUser({
+      email: "",
+      password: "",
+      isLoggedIn: false,
+    });
+  }, []);
 
   const markNotificationAsRead = useCallback((id) => {
     removedNotificationIdsRef.current.add(id);
@@ -160,6 +164,6 @@ const App = () => {
       <Footer />
     </AppContext.Provider>
   );
-};
+}
 
 export default App;
