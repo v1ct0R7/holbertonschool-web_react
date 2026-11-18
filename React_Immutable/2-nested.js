@@ -1,13 +1,7 @@
+import { fromJS } from 'immutable';
 export default function accessImmutableObject(object, array) {
-  let current = object;
-
-  for (const key of array) {
-    if (current === undefined || current === null) {
-      return undefined;
-    }
-
-    current = current[key];
-  }
-
-  return current;
+    // const myKey = array.find((el) => { return el === 'first' });
+    //return fromJS(object).getIn(array)
+    const immutableObj = fromJS(object);
+    return immutableObj.getIn(array);
 }
